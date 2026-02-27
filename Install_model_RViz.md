@@ -1,4 +1,9 @@
 # Instalación del modelo en RViz 
+Es necesario, iniciar el ambiente en ROS2 antes de cualquier modificacion o abrir algun archivo para su visualización
+
+```
+source /opt/ros/humble/setup.bash
+```
 
 ## 1. Obtención y estructura de los archivos
 Los modelos oficiales del Go2 se pueden obtener a través de los repositorios de GitHub de Unitree (como unitree_ros2) o mediante adaptaciones de la comunidad basadas en los SDK oficiales para ROS 2 (Humble, Jazzy, etc.).
