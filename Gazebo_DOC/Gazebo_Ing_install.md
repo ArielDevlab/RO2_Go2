@@ -3,6 +3,8 @@ Es necesario, iniciar el ambiente en ROS2 antes de cualquier modificacion o abri
 
 ```
 source /opt/ros/humble/setup.bash
+source ~/go2_ws/install/setup.bash
+
 ```
 
 ## 1. Instalar el puente de comunicación de Ignition
