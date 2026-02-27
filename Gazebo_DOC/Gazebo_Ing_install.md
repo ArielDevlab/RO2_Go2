@@ -1,4 +1,9 @@
 # Instalación del modelo en Gazebo Ignition 
+Es necesario, iniciar el ambiente en ROS2 antes de cualquier modificacion o abrir algun archivo para su visualización
+
+```
+source /opt/ros/humble/setup.bash
+```
 
 ## 1. Instalar el puente de comunicación de Ignition
 Primero, vamos a descargar los paquetes que conectan ROS 2 con la nueva versión de Gazebo.
