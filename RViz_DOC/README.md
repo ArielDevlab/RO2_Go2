@@ -1,17 +1,35 @@
-# RO2_Go2
-Este repositorio ofrece un ecosistema integral para el desarrollo, simulación y control del robot cuadrúpedo Unitree Go2, optimizado para ROS 2 Humble corriendo sobre Ubuntu 22.04 LTS.
+# Instalación del modelo en RViz 
+1. Obtención y estructura de los archivos
+Los modelos oficiales del Go2 se pueden obtener a través de los repositorios de GitHub de Unitree (como unitree_ros2) o mediante adaptaciones de la comunidad basadas en los SDK oficiales para ROS 2 (Humble, Jazzy, etc.).
 
-## ⚠️ Aviso de Propiedad Intelectual
-Este proyecto utiliza modelos cinemáticos y mallas (meshes) desarrollados por Unitree Robotics. Para respetar los derechos de autor y asegurar la integridad de los modelos, este repositorio no aloja los archivos URDF/Xacro originales.
+Para que la visualización funcione, el paquete descargado depende de dos directorios clave:
+* Carpeta meshes/: Contiene los archivos .stl o .dae que representan la geometría 3D de cada eslabón del cuadrúpedo (chasis, cadera, muslo y pantorrilla).
+* Carpeta urdf/: Contiene el archivo go2.urdf (o .xacro). Este archivo actúa como el esqueleto matemático; utiliza etiquetas <mesh filename="package://..."/> para mandar a llamar a los archivos .stl y los enlaza definiendo los ejes de rotación y los límites de cada motor.
 
-Créditos: Todo el mérito de los archivos de descripción del robot pertenece a [Unitree Robotics](https://www.unitree.com/). Puedes encontrar los archivos oficiales en su repositorio:
-🔗 [Unitree ROS 2 Descriptions](https://github.com/unitreerobotics/unitree_ros2)
+2. Configuración en el Workspace
+Para integrar estos modelos en tu entorno, es necesario compilar el paquete de descripción dentro de tu espacio de trabajo (workspace) para que ROS 2 pueda indexar las rutas de las mallas:
 
-## Objetivo del Proyecto:
-Proporcionar a la comunidad de robótica las herramientas necesarias para la integración de modelos virtuales y reales del Go2, incluyendo configuraciones de URDF, entornos de simulación en Gazebo y scripts de teleoperación.
+Clona el repositorio que contiene la descripción del Go2 dentro del directorio src de tu workspace (por ejemplo, ~/ros2_ws/src).
 
-## Características principales:
-1. Visualización Precisa: Modelos URDF y mallas optimizadas para RViz2.
-2. Simulación Física: Entornos configurados para Gazebo (Ignition/Classic).
-3. Control y Cinemática: Implementación de controladores para movimiento y sensores.
-4. Documentación de Comandos: Guía rápida de ejecución para despliegue inmediato.
+Regresa a la raíz del workspace (cd ~/ros2_ws) e instala cualquier dependencia faltante mediante rosdep.
+
+Compila el paquete. El uso de enlaces simbólicos es muy útil aquí para no tener que recompilar si modificas el URDF:
+
+```
+colcon build --symlink-install
+source install/setup.bash
+```
+
+3. Ejecución y renderizado en RViz
+A diferencia de visualizar una sola pieza estática, un robot con múltiples grados de libertad requiere que el sistema calcule las transformaciones espaciales (TF) de cada eslabón en tiempo real para que RViz ensamble los .stl correctamente. Esto se logra mediante dos nodos esenciales:
+
+* robot_state_publisher: Lee el archivo URDF y publica la posición estática de las articulaciones.
+
+* joint_state_publisher_gui: Despliega una ventana con controles deslizantes que te permitirá mover virtualmente cada articulación del Go2 y ver cómo reaccionan las mallas de las patas.
+
+Por lo general, el paquete incluye un archivo de lanzamiento (launch file) que automatiza la apertura de RViz con estos nodos. El comando de ejecución suele ser similar a este:
+
+```
+ros2 launch go2_description display.launch.py
+```
+** (El nombre del paquete o del archivo .launch.py puede variar ligeramente dependiendo de la rama específica del repositorio que estés utilizando). **
