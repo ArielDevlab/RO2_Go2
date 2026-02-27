@@ -1,8 +1,10 @@
 # Instalación del modelo en RViz 
-Es necesario, iniciar el ambiente en ROS2 antes de cualquier modificacion o abrir algun archivo para su visualización
+Es necesario, iniciar el ambiente en ROS2 antes de empezar a trabajar con RViz ya instaladas las dependecias
+
 
 ```
 source /opt/ros/humble/setup.bash
+source ~/go2_ws/install/setup.bash
 ```
 
 ## 1. Obtención y estructura de los archivos
