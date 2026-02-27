@@ -103,8 +103,68 @@ Tu archivo debería quedar similar a esto (presta especial atención a la etique
   </export>
 </package>
 ```
-3. Recompilar
-   Una vez guardados ambos archivos, regresa a la terminal en la raíz de tu workspace (~/go2_ws) y vuelve a intentar la compilación:
+3. Crear el archivo de lanzamiento en Python
+   Para abrir los modelos, hay un detalle importante: en la estructura original que descargaste, los archivos de la carpeta launch (go2_rviz.launch y gazebo.launch) están escritos en XML, que era el formato de ROS 1. En ROS 2, los archivos de lanzamiento se escriben en Python (.launch.py) para darte mucho más control sobre los nodos.
+
+   * Navega a la carpeta de lanzadores de tu paquete:
+```
+cd ~/go2_ws/src/GO2_URDF/launch
+```
+
+   * Crea un archivo llamado **display.launch.py**:
+```
+nano display.launch.py
+```
+
+   * Pega el siguiente código en Python. Este script inicializa el **robot_state_publisher** (que traduce el URDF), el **joint_state_publisher_gui** (la ventana de los deslizadores) y rviz2:
+
+```
+import os
+from ament_index_python.packages import get_package_share_directory
+from launch import LaunchDescription
+from launch.substitutions import Command
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    # Buscamos la ruta de tu paquete compilado
+    pkg_share = get_package_share_directory('go2_description')
+    
+    # Ruta exacta al archivo xacro maestro
+    xacro_file = os.path.join(pkg_share, 'xacro', 'robot.xacro')
+    
+    # Comando para convertir xacro a URDF en tiempo real
+    robot_description_content = Command(['xacro ', xacro_file])
+    
+    # Nodo 1: Publicador del estado del robot
+    robot_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        output='screen',
+        parameters=[{'robot_description': robot_description_content}]
+    )
+    
+    # Nodo 2: Interfaz gráfica para mover las articulaciones
+    joint_state_publisher_gui = Node(
+        package='joint_state_publisher_gui',
+        executable='joint_state_publisher_gui'
+    )
+    
+    # Nodo 3: RViz2
+    rviz2 = Node(
+        package='rviz2',
+        executable='rviz2',
+        output='screen'
+    )
+
+    return LaunchDescription([
+        robot_state_publisher,
+        joint_state_publisher_gui,
+        rviz2
+    ])
+```
+   
+5. Recompilar
+   Una vez guardados los archivos, regresa a la terminal en la raíz de tu workspace (~/go2_ws) y vuelve a intentar la compilación:
 
 ```
 colcon build --packages-select go2_description
