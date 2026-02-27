@@ -1,5 +1,5 @@
 # Instalación del modelo en Gazebo Ignition 
-Es necesario, iniciar el ambiente en ROS2 antes de cualquier modificacion o abrir algun archivo para su visualización
+Es necesario, iniciar el ambiente en ROS2 antes de empezar a trabajar con Gazebo ya instaladas las dependecias
 
 ```
 source /opt/ros/humble/setup.bash
