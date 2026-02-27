@@ -1,17 +1,12 @@
-# RO2_Go2
-Este repositorio ofrece un ecosistema integral para el desarrollo, simulación y control del robot cuadrúpedo Unitree Go2, optimizado para ROS 2 Humble corriendo sobre Ubuntu 22.04 LTS.
+# CONFIGURACIÖN DENTRO DE RVIZ2
+Como lanzamos RViz2 sin un archivo de configuración predeterminado, la pantalla estará vacía al principio. 
 
-## ⚠️ Aviso de Propiedad Intelectual
-Este proyecto utiliza modelos cinemáticos y mallas (meshes) desarrollados por Unitree Robotics. Para respetar los derechos de autor y asegurar la integridad de los modelos, este repositorio no aloja los archivos URDF/Xacro originales.
+Para ver al Go2:
+* En el panel izquierdo, busca Global Options -> Fixed Frame.
+* Cambia el valor (que probablemente diga map) escribiendo base o trunk (el nombre del eslabón base de tu robot).
+* Abajo a la izquierda, haz clic en el botón Add.
+  Selecciona RobotModel y haz clic en OK.
+* Expande la pestaña de RobotModel que acaba de aparecer en el panel izquierdo y asegúrate de que Description Topic esté configurado en /robot_description.
 
-Créditos: Todo el mérito de los archivos de descripción del robot pertenece a [Unitree Robotics](https://www.unitree.com/). Puedes encontrar los archivos oficiales en su repositorio:
-🔗 [Unitree ROS 2 Descriptions](https://github.com/unitreerobotics/unitree_ros2)
-
-## Objetivo del Proyecto:
-Proporcionar a la comunidad de robótica las herramientas necesarias para la integración de modelos virtuales y reales del Go2, incluyendo configuraciones de URDF, entornos de simulación en Gazebo y scripts de teleoperación.
-
-## Características principales:
-1. Visualización Precisa: Modelos URDF y mallas optimizadas para RViz2.
-2. Simulación Física: Entornos configurados para Gazebo (Ignition/Classic).
-3. Control y Cinemática: Implementación de controladores para movimiento y sensores.
-4. Documentación de Comandos: Guía rápida de ejecución para despliegue inmediato.
+# VISUALIZACIÓN COMPLETA DEL ROBOT EN VRiz2
+<img width="959" height="506" alt="Modelo_Robot_rviz2_GitHub" src="https://github.com/user-attachments/assets/04f601cd-dc44-495a-a08a-2af6d5f9dbda" />
